@@ -1,66 +1,74 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import React, { useState } from 'react';
+import Layout from '@/components/Layout';
+import CodeEditor from '@/components/CodeEditor';
+import Results from '@/components/Results';
+import { analyzeContract, AnalysisReport } from '@/lib/analyzer';
+import { Play } from 'lucide-react';
+
+const DEFAULT_CODE = `pragma solidity ^0.8.0;
+
+contract VulnerableBank {
+    mapping(address => uint) public balances;
+
+    function deposit() public payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    function withdraw() public {
+        uint bal = balances[msg.sender];
+        require(bal > 0);
+
+        (bool sent, ) = msg.sender.call{value: bal}("");
+        require(sent, "Failed to send Ether");
+
+        balances[msg.sender] = 0;
+    }
+}`;
 
 export default function Home() {
+  const [code, setCode] = useState(DEFAULT_CODE);
+  const [report, setReport] = useState<AnalysisReport | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+
+  const handleAnalyze = () => {
+    setIsScanning(true);
+    // Simulate scanning delay for effect
+    setTimeout(() => {
+      const result = analyzeContract(code);
+      setReport(result);
+      setIsScanning(false);
+    }, 1500);
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+    <Layout>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[calc(100vh-140px)]">
+        {/* Left Column: Editor */}
+        <div className="flex flex-col gap-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-bold text-[var(--neon-green)] tracking-wide">SOURCE CODE</h2>
+            <button
+              onClick={handleAnalyze}
+              disabled={isScanning}
+              className="bg-[var(--neon-green)] text-black px-6 py-2 rounded font-bold flex items-center gap-2 hover:bg-[#00cc7d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <Play className="w-4 h-4 fill-current" />
+              ANALYZE
+            </button>
+          </div>
+          <CodeEditor code={code} onChange={setCode} />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Right Column: Results */}
+        <div className="flex flex-col gap-4 h-full overflow-hidden">
+          <h2 className="text-lg font-bold text-[var(--neon-green)] tracking-wide">ANALYSIS REPORT</h2>
+          <div className="flex-1 min-h-0">
+            <Results report={report} isScanning={isScanning} />
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }
