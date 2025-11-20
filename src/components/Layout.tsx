@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <div className="flex items-center gap-2">
                         <ShieldCheck className="w-8 h-8 text-[var(--neon-green)]" />
                         <h1 className="text-xl font-bold tracking-wider">
-                            WEB3<span className="text-[var(--neon-green)]">SEC</span> SCANNER
+                            0x<span className="text-[var(--neon-green)]">SENTINEL</span>
                         </h1>
                     </div>
                     <nav className="flex gap-4 text-sm text-gray-400">
