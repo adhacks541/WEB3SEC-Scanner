@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ShieldCheck } from 'lucide-react';
 
@@ -25,9 +26,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         </h1>
                     </div>
                     <nav className="flex gap-4 text-sm text-gray-400">
-                        <a href="#" className="hover:text-white transition-colors">Scanner</a>
-                        <a href="#" className="hover:text-white transition-colors">Vulnerabilities</a>
-                        <a href="#" className="hover:text-white transition-colors">Docs</a>
+                        <Link href="/" className="hover:text-white transition-colors">Scanner</Link>
+                        <Link href="/vulnerabilities" className="hover:text-white transition-colors">Vulnerabilities</Link>
+                        <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
                     </nav>
                 </div>
             </header>
