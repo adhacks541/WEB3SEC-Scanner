@@ -1,4 +1,5 @@
 
+
 export interface Vulnerability {
     id: string;
     name: string;
@@ -12,6 +13,7 @@ export interface AnalysisReport {
     vulnerabilities: Vulnerability[];
     timestamp: number;
     contractName?: string;
+    mode: 'Solc' | 'Regex';
 }
 
 export const VULNERABILITY_PATTERNS = [
@@ -35,8 +37,6 @@ export const VULNERABILITY_PATTERNS = [
         id: 'unchecked-low-level',
         name: 'Unchecked Low-Level Call',
         regex: /(\.call|\.delegatecall|\.staticcall)\s*\(/,
-        // This is a simple check; a more robust one would check if the return value is used. 
-        // For this MVP, we flag it if we don't see an obvious assignment or check nearby (simplified).
         severity: 'Medium',
         description: 'Low-level calls return a success boolean that should be checked.',
         remediation: 'Always check the return value of low-level calls: (bool success, ) = ...',
@@ -60,21 +60,22 @@ export const VULNERABILITY_PATTERNS = [
 ] as const;
 
 export function analyzeContract(code: string): AnalysisReport {
+    // Fallback directly to regex for now, or this will be replaced by the worker caller
+    return analyzeContractRegex(code);
+}
+
+export function analyzeContractRegex(code: string): AnalysisReport {
     const vulnerabilities: Vulnerability[] = [];
     const lines = code.split('\n');
 
-    // Extract Contract Name (Simple regex)
     const nameMatch = code.match(/contract\s+(\w+)/);
     const contractName = nameMatch ? nameMatch[1] : 'Unknown Contract';
 
     lines.forEach((line, index) => {
-        // Skip comments (very basic)
         if (line.trim().startsWith('//') || line.trim().startsWith('*')) return;
 
         VULNERABILITY_PATTERNS.forEach((pattern) => {
             if (pattern.regex.test(line)) {
-                // Avoid duplicate reporting for the same line/issue if possible, 
-                // but for now we report every occurrence.
                 vulnerabilities.push({
                     id: pattern.id,
                     name: pattern.name,
@@ -91,5 +92,6 @@ export function analyzeContract(code: string): AnalysisReport {
         vulnerabilities,
         timestamp: Date.now(),
         contractName,
+        mode: 'Regex'
     };
 }

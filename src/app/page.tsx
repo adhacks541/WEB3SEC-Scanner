@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import CodeEditor from '@/components/CodeEditor';
 import Results from '@/components/Results';
-import { analyzeContract, AnalysisReport } from '@/lib/analyzer';
+import { analyze } from '@/app/actions';
+import { AnalysisReport } from '@/lib/analyzer';
 import { Play } from 'lucide-react';
 
 const DEFAULT_CODE = `pragma solidity ^0.8.0;
@@ -32,14 +33,17 @@ export default function Home() {
   const [report, setReport] = useState<AnalysisReport | null>(null);
   const [isScanning, setIsScanning] = useState(false);
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     setIsScanning(true);
-    // Simulate scanning delay for effect
-    setTimeout(() => {
-      const result = analyzeContract(code);
+    // Simulate minor delay for UI feel if needed, but server action is async
+    try {
+      const result = await analyze(code);
       setReport(result);
+    } catch (e) {
+      console.error("Analysis failed", e);
+    } finally {
       setIsScanning(false);
-    }, 1500);
+    }
   };
 
   return (
