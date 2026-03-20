@@ -6,12 +6,13 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![React](https://img.shields.io/badge/React-19-61dafb?logo=react)
 
 ---
 
 ## ✨ What It Does
 
-0xSENTINEL lets you paste any Solidity smart contract and receive an instant security report — no wallets, no API keys, no Python setup required. The analysis engine scans your code for common vulnerability patterns and returns a **0–100 Security Score** along with detailed remediation advice for every detected issue.
+0xSENTINEL lets you paste any Solidity smart contract and receive an **instant security report** — no wallets, no API keys, no Python setup required. The analysis engine scans your code for common vulnerability patterns and returns a **0–100 Security Score** along with detailed remediation advice for every detected issue.
 
 ---
 
@@ -25,6 +26,8 @@
 | 4 | **Weak Randomness** | 🟡 Medium | `block.timestamp`, `block.difficulty`, `now` used as entropy |
 | 5 | **Floating Pragma** | 🔵 Low | `pragma solidity ^x.x.x` — unlocked compiler version |
 
+> Comments and docstrings are automatically skipped to reduce false positives.
+
 **Security Score formula:**
 ```
 score = max(0, 100 − (High×20 + Medium×10 + Low×5))
@@ -36,11 +39,13 @@ score = max(0, 100 − (High×20 + Medium×10 + Low×5))
 
 | Layer | Technology |
 |---|---|
-| Framework | [Next.js](https://nextjs.org/) (App Router) |
-| Language | [TypeScript](https://www.typescriptlang.org/) |
+| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
+| Language | [TypeScript 5](https://www.typescriptlang.org/) |
+| Runtime | [React 19](https://react.dev/) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com/) + CSS Variables |
 | Animations | [Framer Motion](https://www.framer.com/motion/) |
 | Icons | [Lucide React](https://lucide.dev/) |
+| Solidity Parsing | `@solidity-parser/parser`, `solc` *(installed, AST path upcoming)* |
 
 ---
 
@@ -110,16 +115,23 @@ The UI uses a **cyberpunk / terminal aesthetic**:
 
 ---
 
+## 🔒 Security
+
+- Next.js has been kept at the latest version (`^16.1.1`) to patch [CVE-2025-66478](https://github.com/advisories/GHSA-gp8f-8m3g-qvj9) (middleware auth bypass).
+- No user data is transmitted — all analysis runs server-side as a Next.js Server Action with no external API calls.
+
+---
+
 ## 🔮 Roadmap
 
-- [ ] AST-based analysis using `@solidity-parser/parser` for higher accuracy
-- [ ] Solidity syntax highlighting in the code editor
+- [ ] AST-based analysis using `@solidity-parser/parser` for higher accuracy & fewer false positives
+- [ ] Solidity syntax highlighting in the code editor (`prismjs` already installed)
 - [ ] Drag-and-drop `.sol` file upload
 - [ ] Export report as PDF / JSON
 - [ ] Scan history stored in `localStorage`
-- [ ] More checks: integer overflow, access control, selfdestruct misuse
+- [ ] More checks: integer overflow, access control, selfdestruct misuse, delegatecall to untrusted contracts
 - [ ] Live/debounced auto-scan as you type
-- [ ] AI-powered "Fix it for me" suggestions
+- [ ] AI-powered "Fix it for me" suggestions via LLM API
 - [ ] Integration with Slither / Mythril via backend API
 
 ---
