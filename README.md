@@ -126,6 +126,23 @@ The core engine in `analyzer.ts` parses the contract line by line using **regex 
 
 ---
 
+## ⚠️ Known Limitations
+
+| Gap | Detail |
+|---|---|
+| **Regex-only engine** | AST-based analysis via `@solidity-parser/parser` is installed but not yet wired up |
+| **Compiler not invoked** | `solc` package is installed but never called |
+| **False positives** | Regex can't understand context — a checked `.call(` will still be flagged |
+| **Single file only** | No import resolution or multi-file project support |
+| **No syntax highlighting** | `prismjs` is installed but not yet integrated into the editor |
+| **No file upload** | Paste-only; no drag-and-drop `.sol` file support |
+| **No AI suggestions** | "Fix it for me" feature is on the roadmap but not built |
+| **No export / share** | No way to download or share a scan report |
+| **No scan history** | No persistent history; reports are lost on page refresh |
+| **No interactive docs** | The `/docs` page has text descriptions only — no live code demos |
+
+---
+
 ## 🎨 Design
 
 The UI uses a **cyberpunk / terminal aesthetic**:
