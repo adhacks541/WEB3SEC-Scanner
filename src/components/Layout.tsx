@@ -39,8 +39,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </main>
 
             {/* Footer */}
-            <footer className="z-10 border-t border-[var(--panel-border)] py-6 text-center text-gray-500 text-sm">
+            <footer className="z-10 border-t border-[var(--panel-border)] py-6 text-center text-gray-500 text-sm flex flex-col gap-2">
                 <p>SECURE YOUR SMART CONTRACTS</p>
+                <p>Built by adhacks</p>
             </footer>
         </div>
     );
