@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* Footer */}
             <footer className="z-10 border-t border-[var(--panel-border)] py-6 text-center text-gray-500 text-sm flex flex-col gap-2">
                 <p>SECURE YOUR SMART CONTRACTS</p>
-                <p>Built by adhacks</p>
+                <p>Built by <a href="https://www.linkedin.com/in/aditya-singh-83a5b81bb/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">Aditya Singh</a></p>
             </footer>
         </div>
     );
