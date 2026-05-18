@@ -3,7 +3,7 @@
 import React from 'react';
 import Layout from '@/components/Layout';
 import { VULNERABILITY_PATTERNS } from '@/lib/analyzer';
-import { AlertTriangle, Shield } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 export default function VulnerabilitiesPage() {
     return (
@@ -15,7 +15,7 @@ export default function VulnerabilitiesPage() {
                         Vulnerability Database
                     </h1>
                     <p className="text-gray-400">
-                        Our scanner currently detects the following common smart contract vulnerabilities using static analysis patterns.
+                        Our scanner currently detects the following common smart contract vulnerabilities using an AST-first analysis pass with regex fallback.
                     </p>
                 </div>
 

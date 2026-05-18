@@ -97,3 +97,45 @@ pre[class*="language-"] {
   padding: 1rem !important;
   text-shadow: none !important;
 }
+
+code[class*="language-"] {
+  color: #d9dee3;
+  text-shadow: none;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #5f6b76;
+}
+
+.token.keyword {
+  color: #7dd3fc;
+}
+
+.token.function,
+.token.function-variable {
+  color: #f9a8d4;
+}
+
+.token.number,
+.token.boolean {
+  color: #fbbf24;
+}
+
+.token.string,
+.token.char {
+  color: #86efac;
+}
+
+.token.operator,
+.token.punctuation {
+  color: #cbd5e1;
+}
+
+.token.builtin,
+.token.class-name,
+.token.constant {
+  color: #c4b5fd;
+}

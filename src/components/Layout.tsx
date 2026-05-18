@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { ShieldCheck } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
