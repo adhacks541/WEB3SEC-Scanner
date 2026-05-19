@@ -1,4 +1,5 @@
 import parser from '@solidity-parser/parser';
+import { VULNERABILITY_METADATA } from './vulnerabilities';
 import type {
   BaseASTNode,
   BinaryOperation,
@@ -21,6 +22,10 @@ export interface Vulnerability {
   severity: 'High' | 'Medium' | 'Low';
   line?: number;
   remediation: string;
+  explanation?: string;
+  whyDangerous?: string;
+  secureAlternative?: string;
+  secureExample?: string;
   excerpt?: string;
   confidence?: 'High' | 'Medium';
 }
@@ -451,6 +456,7 @@ function addFinding(
   confidence: Confidence
 ) {
   const definition = getDefinition(id);
+  const extended = VULNERABILITY_METADATA[id];
   const findingKey = `${id}:${line ?? 0}`;
 
   if (findings.has(findingKey)) {
@@ -463,7 +469,11 @@ function addFinding(
     description: definition.description,
     severity: definition.severity,
     line,
-    remediation: definition.remediation,
+    remediation: extended?.remediation || definition.remediation,
+    explanation: extended?.explanation,
+    whyDangerous: extended?.whyDangerous,
+    secureAlternative: extended?.secureAlternative,
+    secureExample: extended?.secureExample,
     excerpt: line ? getLineExcerpt(code, line) : undefined,
     confidence,
   });

@@ -1,13 +1,12 @@
 'use client';
 
 import React from 'react';
-import Layout from '@/components/Layout';
 import { VULNERABILITY_PATTERNS } from '@/lib/analyzer';
 import { Shield } from 'lucide-react';
 
 export default function VulnerabilitiesPage() {
     return (
-        <Layout>
+        <>
             <div className="max-w-4xl mx-auto">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
@@ -42,6 +41,6 @@ export default function VulnerabilitiesPage() {
                     ))}
                 </div>
             </div>
-        </Layout>
+        </>
     );
 }

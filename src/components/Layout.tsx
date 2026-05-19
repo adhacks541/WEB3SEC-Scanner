@@ -1,8 +1,7 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck } from 'lucide-react';
+import AuthButton from './AuthButton';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -24,10 +23,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             0x<span className="text-[var(--neon-green)]">SENTINEL</span>
                         </h1>
                     </div>
-                    <nav className="flex gap-4 text-sm text-gray-400">
+                    <nav className="flex items-center gap-6 text-sm text-gray-400">
                         <Link href="/" className="hover:text-white transition-colors">Scanner</Link>
+                        <Link href="/reports" className="hover:text-white transition-colors">Reports</Link>
                         <Link href="/vulnerabilities" className="hover:text-white transition-colors">Vulnerabilities</Link>
                         <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
+                        
+                        <div className="w-px h-4 bg-[var(--panel-border)]"></div>
+                        <AuthButton />
                     </nav>
                 </div>
             </header>

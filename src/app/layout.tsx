@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "Advanced static analysis tool for Solidity smart contracts. Detect vulnerabilities instantly.",
 };
 
+import Layout from "@/components/Layout";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <Layout>{children}</Layout>
       </body>
     </html>
   );

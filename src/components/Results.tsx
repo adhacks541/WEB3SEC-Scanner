@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { AlertTriangle, CheckCircle, Info, ShieldAlert } from 'lucide-react';
-import { AnalysisReport, Vulnerability, calculateSecurityScore } from '@/lib/analyzer';
+import { CheckCircle, Info, ShieldAlert } from 'lucide-react';
+import { AnalysisReport, calculateSecurityScore } from '@/lib/analyzer';
+import VulnerabilityCard from './VulnerabilityCard';
 
 interface ResultsProps {
   report: AnalysisReport | null;
@@ -121,45 +122,5 @@ function StatCard({ label, count, color }: { label: string; count: number; color
       <div className={`text-2xl font-bold ${color}`}>{count}</div>
       <div className="mt-1 text-xs uppercase text-gray-500">{label}</div>
     </div>
-  );
-}
-
-function VulnerabilityCard({ vuln, index }: { vuln: Vulnerability; index: number }) {
-  const borderColor =
-    vuln.severity === 'High'
-      ? 'border-l-[var(--alert-red)]'
-      : vuln.severity === 'Medium'
-        ? 'border-l-[var(--warning-yellow)]'
-        : 'border-l-blue-400';
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.08 }}
-      className={`glass-panel border-l-4 bg-[#151515] p-4 ${borderColor}`}
-    >
-      <div className="mb-2 flex items-start justify-between">
-        <div>
-          <h4 className="flex items-center gap-2 font-bold text-gray-200">
-            {vuln.severity === 'High' && <AlertTriangle className="h-4 w-4 text-[var(--alert-red)]" />}
-            {vuln.name}
-          </h4>
-          <p className="mt-1 text-xs uppercase tracking-[0.2em] text-gray-500">
-            {vuln.severity} severity{vuln.confidence ? ` • ${vuln.confidence} confidence` : ''}
-          </p>
-        </div>
-        {vuln.line && <span className="rounded bg-[#222] px-2 py-1 font-mono text-xs text-gray-400">Line {vuln.line}</span>}
-      </div>
-      <p className="mb-3 text-sm text-gray-400">{vuln.description}</p>
-      {vuln.excerpt ? (
-        <div className="mb-3 rounded border border-[#1b1b1b] bg-[#0d0d0d] px-3 py-2 font-mono text-xs text-gray-400">
-          {vuln.excerpt}
-        </div>
-      ) : null}
-      <div className="rounded border border-[#222] bg-[#0f0f0f] p-3 font-mono text-xs text-gray-500">
-        <strong className="text-gray-400">Fix:</strong> {vuln.remediation}
-      </div>
-    </motion.div>
   );
 }

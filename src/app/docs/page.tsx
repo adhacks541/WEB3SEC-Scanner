@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import Layout from '@/components/Layout';
 import { Book, Terminal, Code } from 'lucide-react';
 
 export default function DocsPage() {
   return (
-    <Layout>
+    <>
       <div className="mx-auto max-w-4xl">
         <div className="mb-10 text-center">
           <h1 className="mb-4 text-4xl font-bold text-white">Documentation</h1>
@@ -23,13 +22,30 @@ export default function DocsPage() {
               </div>
               <h2 className="text-2xl font-bold text-white">How it Works</h2>
             </div>
-          <p className="mb-4 leading-relaxed text-gray-300">
+            <p className="mb-4 leading-relaxed text-gray-300">
               0xSENTINEL accepts pasted or uploaded Solidity source code, sends it through a Next.js server action, and runs an
               AST-backed analysis pass against common risk patterns.
             </p>
             <p className="leading-relaxed text-gray-300">
               When the parser cannot recover cleanly, the scanner falls back to regex heuristics so users still get a first-pass read.
               It remains a triage tool, not a substitute for a full manual audit or deeper symbolic analysis.
+            </p>
+          </section>
+
+          <section className="glass-panel p-8">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="rounded-lg bg-[var(--neon-green-dim)] p-2">
+                <Book className="h-6 w-6 text-[var(--neon-green)]" />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Saved Reports Workflow</h2>
+            </div>
+            <p className="leading-relaxed text-gray-300">
+              You can now upload `.sol` files, save completed scans to persistent history, reopen them later from the reports index,
+              and export saved scans as JSON from a stable report URL.
+            </p>
+            <p className="mt-4 leading-relaxed text-gray-300">
+              This makes 0xSENTINEL more useful for repeat reviews, collaboration handoff, and portfolio demonstrations because the
+              analysis is no longer lost on refresh.
             </p>
           </section>
 
@@ -104,6 +120,6 @@ export default function DocsPage() {
           </section>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
